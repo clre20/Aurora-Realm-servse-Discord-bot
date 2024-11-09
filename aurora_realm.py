@@ -278,7 +278,7 @@ async def add(interaction: discord.Interaction):
         overwrites = {
             guild.default_role: discord.PermissionOverwrite(read_messages=False),  # 其他人不可見
             interaction.user: discord.PermissionOverwrite(read_messages=True),     # 開單人可見
-            guild.get_role(1304606468036890674): discord.PermissionOverwrite(read_messages=True)  # 管理員身份組可見
+            guild.get_role(1304679684922933290): discord.PermissionOverwrite(read_messages=True)  # 管理員身份組可見
         }
         
         # 創建客服單頻道
