@@ -296,9 +296,10 @@ async def add(interaction: discord.Interaction):
             async def confirm_button_callback(interaction: discord.Interaction):
                 if new_channel:
                     await new_channel.delete()
+                    print(f"{channel_name}的客服單已關閉")
                     try:
                         await interaction.response.send_message("客服單已關閉", ephemeral=True)
-                        print(f"{channel_name}的客服單已關閉")
+
                     except discord.errors.NotFound:
                         # 頻道已被刪除，無需發送訊息
                         pass
