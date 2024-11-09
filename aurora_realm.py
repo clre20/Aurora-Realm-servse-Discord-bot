@@ -321,7 +321,7 @@ async def add(interaction: discord.Interaction):
         print(f"{channel_name}的客服單已開啟")
         await interaction.response.send_message(f"已創建新頻道： #{channel_name}", ephemeral=True)
     else:
-        await interaction.response.send_message(f"你已傭有一個客服單了 #{channel_name}", ephemeral=True)
+        await interaction.response.send_message(f"你已有一個客服單了 #{channel_name}", ephemeral=True)
 
 
 
