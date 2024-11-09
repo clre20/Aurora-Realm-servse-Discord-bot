@@ -298,6 +298,7 @@ async def add(interaction: discord.Interaction):
                     await new_channel.delete()
                     try:
                         await interaction.response.send_message("客服單已關閉", ephemeral=True)
+                        print(f"{channel_name}的客服單已關閉")
                     except discord.errors.NotFound:
                         # 頻道已被刪除，無需發送訊息
                         pass
@@ -316,13 +317,14 @@ async def add(interaction: discord.Interaction):
         view.add_item(close_button)
 
         # 發送訊息並附加關閉按鈕
-        await new_channel.send("客服單已開啟", view=view)
-        await interaction.response.send_message(f"已創建新頻道：#{channel_name}", ephemeral=True)
+        await new_channel.send("客服單已開啟，請詳細說明問題", view=view)
+        print(f"{channel_name}的客服單已開啟")
+        await interaction.response.send_message(f"已創建新頻道： #{channel_name}", ephemeral=True)
     else:
-        await interaction.response.send_message(f'頻道 #{channel_name} 已經存在！', ephemeral=True)
+        await interaction.response.send_message(f"你已傭有一個客服單了 #{channel_name}", ephemeral=True)
 
 
 
 
 # 使用你的Bot token
-bot.run('')
+bot.run("")
