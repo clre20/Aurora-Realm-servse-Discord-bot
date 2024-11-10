@@ -305,7 +305,7 @@ async def add(interaction: discord.Interaction):
             confirm_view = View(timeout=None)  # 設置無限時長
             confirm_view.add_item(confirm_button)
             
-            await interaction.response.send_message("已要求關閉客服單", view=confirm_view)
+            await interaction.response.send_message("已要求關閉客服單", view=confirm_view, ephemeral=True)
 
         close_button.callback = close_button_callback
 
@@ -316,9 +316,9 @@ async def add(interaction: discord.Interaction):
         # 發送訊息並附加關閉按鈕
         await new_channel.send("客服單已開啟，請詳細說明問題", view=view)
         print(f"{channel_name}的客服單已開啟")
-        await interaction.response.send_message(f"已創建新頻道：{new_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"已創建新頻道： {new_channel.mention}", ephemeral=True)
     else:
-        await interaction.response.send_message(f"你已有一個客服單了 {new_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"你已有一個客服單了 #{existing_channel.mention}", ephemeral=True)
 
 # 使用你的Bot token
 bot.run("")
