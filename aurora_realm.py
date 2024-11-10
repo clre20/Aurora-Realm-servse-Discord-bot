@@ -1,20 +1,16 @@
 import discord
 from discord.ext import commands
-from discord import app_commands
 from discord.ui import Button, View
-
 
 # 創建機器人客戶端
 intents = discord.Intents.default()
 intents.typing = False
 intents.presences = False
-intents.members = True# 启用 GUILD_MEMBERS Intent
+intents.members = True  # 启用 GUILD_MEMBERS Intent
 bot = commands.Bot(command_prefix='!', intents=intents)
-# 機器人權限設置
-intents.message_content = True
+intents.message_content = True # 機器人權限設置
 
-
-#------------------------身分組-------------------------------
+#------------------------on ready-------------------------------
 @bot.event
 async def on_ready():
     print('Bot已登录')
@@ -26,6 +22,7 @@ async def on_ready():
     #機器人的在線狀態
     await bot.change_presence(status=discord.Status.online, activity=game)
 
+#------------------------身分組-------------------------------
 @bot.event
 async def on_raw_reaction_add(payload):
     # 替换成你的消息的ID
@@ -261,7 +258,7 @@ async def on_raw_reaction_remove(payload):
         else:
             print("Guild not found.")
 
-#------------------------/指令-------------------------------
+#
 # 創建頻道並顯示關閉按鈕
 @bot.tree.command(name="客服單", description="不要亂開吖")
 async def add(interaction: discord.Interaction):
@@ -299,33 +296,29 @@ async def add(interaction: discord.Interaction):
                     print(f"{channel_name}的客服單已關閉")
                     try:
                         await interaction.response.send_message("客服單已關閉", ephemeral=True)
-
                     except discord.errors.NotFound:
                         # 頻道已被刪除，無需發送訊息
                         pass
 
             confirm_button.callback = confirm_button_callback
             
-            confirm_view = View()
+            confirm_view = View(timeout=None)  # 設置無限時長
             confirm_view.add_item(confirm_button)
             
-            await interaction.response.send_message("已要求關閉客服單", view=confirm_view, ephemeral=True)
+            await interaction.response.send_message("已要求關閉客服單", view=confirm_view)
 
         close_button.callback = close_button_callback
 
-        # 設置關閉按鈕的視圖
-        view = View()
+        # 設置關閉按鈕的視圖，無超時限制
+        view = View(timeout=None)  # 設置無限時長
         view.add_item(close_button)
 
         # 發送訊息並附加關閉按鈕
         await new_channel.send("客服單已開啟，請詳細說明問題", view=view)
         print(f"{channel_name}的客服單已開啟")
-        await interaction.response.send_message(f"已創建新頻道： #{channel_name}", ephemeral=True)
+        await interaction.response.send_message(f"已創建新頻道：{new_channel.mention}", ephemeral=True)
     else:
-        await interaction.response.send_message(f"你已有一個客服單了 #{channel_name}", ephemeral=True)
-
-
-
+        await interaction.response.send_message(f"你已有一個客服單了 {new_channel.mention}", ephemeral=True)
 
 # 使用你的Bot token
 bot.run("")
